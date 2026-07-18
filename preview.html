@@ -1,0 +1,485 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>only_noise — preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Martian+Mono:wght@300;400;500;600&family=Bodoni+Moda:ital,wght@1,500&family=Geist:wght@300;400;500;600&family=Anton&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#0a0908; --bg-rgb:10,9,8; --panel:#0c0b09;
+  --ink:#ECE4D2; --ink-2:#c9c0b2; --ink-3:#a49a8c;
+  --mute:#8f857a; --dim:#6f665c;
+  --gold:#E0B24A; --gold-rgb:224,178,74;
+  --red:#C24A43; --blue:#6ea3c2; --cyan:#7FB6BE; --cyan-rgb:127,182,190; --petrol:#3C6E72;
+  --line:236,228,210; --card1:20,16,13; --card2:12,11,9;
+  --vig-op:1; --grain-op:0.05;
+}
+:root[data-theme="light"]{
+  --bg:#f3eee3; --bg-rgb:243,238,227; --panel:#eae2d2;
+  --ink:#231e18; --ink-2:#463c31; --ink-3:#6f6557;
+  --mute:#83796b; --dim:#a89e8f;
+  --gold:#9a6a12; --gold-rgb:154,106,18;
+  --red:#b23a33; --blue:#3d6b86; --cyan:#3C6E72; --cyan-rgb:60,110,114; --petrol:#3C6E72;
+  --line:60,52,42; --card1:224,215,197; --card2:216,207,189;
+  --vig-op:0; --grain-op:0.04;
+}
+/* hero + intro + nav stay nocturnal in both themes */
+#top, [data-loader], nav{
+  --bg:#0a0908; --bg-rgb:10,9,8; --panel:#0c0b09;
+  --ink:#ECE4D2; --ink-2:#c9c0b2; --ink-3:#a49a8c;
+  --mute:#8f857a; --dim:#6f665c;
+  --gold:#E0B24A; --gold-rgb:224,178,74;
+  --red:#C24A43; --blue:#6ea3c2; --cyan:#7FB6BE; --cyan-rgb:127,182,190; --petrol:#3C6E72;
+  --line:236,228,210; --card1:20,16,13; --card2:12,11,9;
+}
+#top{ background:#0a0908; }
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'STIX Two Text',serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;transition:background .5s ease,color .5s ease;}
+::selection{background:rgba(var(--gold-rgb),0.30);}
+a{color:var(--gold);text-decoration:none;transition:color .3s ease;}
+a:hover{color:var(--red);}
+@keyframes onPulse{0%{transform:scale(1);opacity:.8;}70%{transform:scale(2.9);opacity:0;}100%{opacity:0;}}
+@keyframes onDot{0%,100%{opacity:1;}50%{opacity:.35;}}
+@keyframes onBlink{0%,48%{opacity:1;}50%,100%{opacity:0;}}
+@keyframes onGrain{0%{transform:translate(0,0);}25%{transform:translate(-3%,2%);}50%{transform:translate(2%,-3%);}75%{transform:translate(-2%,3%);}100%{transform:translate(0,0);}}
+@keyframes onFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+@media (max-height:760px){[data-begin]{display:none !important;}}
+@keyframes onBreathe{0%,100%{opacity:.5;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
+@keyframes onCaret{0%,45%{opacity:1;}55%,100%{opacity:0;}}
+@keyframes onMarkGlitch{0%,86%,100%{text-shadow:0.02em 0 0 rgba(194,74,67,0.5),-0.02em 0 0 rgba(224,178,74,0.5);transform:translate(0);clip-path:none;}87%{text-shadow:-1.6px 0 var(--red),1.6px 0 var(--gold);transform:translate(1px,0);}89%{text-shadow:1.8px 0 var(--red),-1.8px 0 var(--gold);transform:translate(-1.5px,0) skewX(-4deg);clip-path:inset(18% 0 56% 0);}91%{text-shadow:-1.2px 0 var(--red),1.2px 0 var(--gold);clip-path:inset(64% 0 7% 0);transform:translate(1.5px,0);}92%{text-shadow:0.02em 0 0 rgba(194,74,67,0.5),-0.02em 0 0 rgba(224,178,74,0.5);transform:translate(0);clip-path:none;}}
+@media (prefers-reduced-motion:reduce){[data-glitchmark]{animation:none !important;}}
+[data-strk]{position:relative;color:var(--mute);white-space:nowrap;}
+[data-strk]::after{content:'';position:absolute;left:-2px;right:-2px;top:56%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;animation:strk .34s cubic-bezier(.4,0,.1,1) forwards;}
+@keyframes strk{to{transform:scaleX(1);}}
+@media (max-width:680px){section h2,section h3{white-space:normal !important;}nav > div{gap:11px !important;}}
+[data-qbr]{display:none;}
+@media (max-width:680px){[data-qbr]{display:block;}[data-q]{white-space:normal !important;text-align:center !important;}[data-qwrap]{width:auto !important;max-width:94vw;}}
+
+.on-bar{display:flex;align-items:flex-start;gap:16px;}
+.on-lab{flex:0 0 auto;width:clamp(150px,32%,270px);font-family:'STIX Two Text',serif;font-size:15px;color:var(--ink-2);line-height:1.25;}
+.on-lab small{display:block;font-family:'Martian Mono',monospace;font-size:9.5px;letter-spacing:0.02em;color:var(--dim);text-transform:none;margin-top:3px;}
+.on-track{flex:1 1 auto;height:8px;margin-top:4px;background:rgba(var(--line),0.07);position:relative;overflow:hidden;}
+.on-fill{position:absolute;left:0;top:0;bottom:0;background:rgba(var(--line),0.20);}
+.on-bar.signal .on-fill{background:var(--gold);}
+.on-pct{flex:0 0 auto;width:44px;text-align:right;margin-top:4px;font-family:'Martian Mono',monospace;font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums;}
+.on-bar.signal .on-pct{color:var(--gold);}
+/* theme toggle */
+[data-theme-toggle]{background:none;border:none;cursor:pointer;padding:4px 6px;line-height:1;font-size:14px;color:var(--mute);transition:color .3s ease,transform .5s ease;}
+[data-theme-toggle]:hover{color:var(--gold);}
+:root[data-theme="light"] [data-theme-toggle]{transform:rotate(180deg);}
+
+/* --- tool-like: serif reserved for display headings, Geist for body/UI --- */
+h1{font-family:'Martian Mono',monospace !important;letter-spacing:-0.005em;font-weight:500;}
+h2,h3{font-family:'Anton','Martian Mono',sans-serif !important;font-weight:400;letter-spacing:0.01em;line-height:0.98;text-shadow:0.028em 0 0 rgba(194,74,67,0.5),-0.028em 0 0 rgba(224,178,74,0.55);}
+/* technical framing: viewfinder corner brackets */
+[data-frame]{position:fixed;inset:9px;z-index:55;pointer-events:none;}
+.fc{position:absolute;width:13px;height:13px;border-color:rgba(var(--line),0.22);border-style:solid;border-width:0;}
+.fc.tl{top:0;left:0;border-top-width:1px;border-left-width:1px;}
+.fc.tr{top:0;right:0;border-top-width:1px;border-right-width:1px;}
+.fc.bl{bottom:0;left:0;border-bottom-width:1px;border-left-width:1px;}
+.fc.br{bottom:0;right:0;border-bottom-width:1px;border-right-width:1px;}
+/* telemetry status dot */
+.on-dotlive{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:7px;vertical-align:middle;box-shadow:0 0 6px rgba(var(--gold-rgb),0.7);}
+/* --- instrument HUD layer · cyan reserved (moodboard move 4) --- */
+.hud-coord,.hud-tick{position:fixed;z-index:56;bottom:15px;font-family:'Martian Mono',monospace;font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(var(--cyan-rgb),0.5);pointer-events:none;}
+.hud-coord{left:24px;}
+.hud-tick{right:24px;font-variant-numeric:tabular-nums;}
+.hud-kana{position:fixed;z-index:56;left:13px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.34em;color:rgba(var(--cyan-rgb),0.32);pointer-events:none;}
+.hud-rule{position:fixed;z-index:56;top:2px;left:24px;width:120px;height:8px;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(var(--cyan-rgb),0.35) 0 1px,transparent 1px 12px);opacity:.6;}
+.mk-anno{position:absolute;font-family:'Martian Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(var(--cyan-rgb),0.5);white-space:nowrap;pointer-events:none;line-height:1.7;}
+.mk-anno.mk-kana{text-transform:none;color:rgba(var(--cyan-rgb),0.35);letter-spacing:0.2em;}
+@media(max-width:760px){.mk-anno{display:none;}}
+@media(max-width:680px){.hud-kana,.hud-rule{display:none;}.hud-coord,.hud-tick{font-size:8.5px;}}
+[data-scan]{position:fixed;inset:0;z-index:54;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,0.16) 0px,rgba(0,0,0,0.16) 1px,transparent 1px,transparent 3px);opacity:0.45;}
+
+html{scroll-behavior:auto !important;}
+[data-reveal]{opacity:1 !important;transform:none !important;}
+[data-frame]{position:fixed;}
+.pv-note{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:90;font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);background:rgba(var(--bg-rgb),0.7);border:1px solid rgba(var(--line),0.12);border-radius:20px;padding:7px 16px;}
+body{padding-top:64px;}
+</style>
+</head><body>
+<div data-frame="" aria-hidden="true"><i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i><span class="hud-rule"></span><span class="hud-kana">ノイズ観測</span><span class="hud-coord">58°10′44.8″N · 14°25′12.8″E</span><span class="hud-tick" data-tick="">SESSION 00:00:00</span></div><nav style="position:fixed;top:14px;left:14px;right:14px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,2.4vw,26px);border-radius:15px;border:1px solid rgba(var(--line),0.13);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);background:rgba(var(--bg-rgb),0.5);box-shadow:0 10px 34px rgba(0,0,0,0.30);">
+    <a href="#top" style="font-family:'Martian Mono',monospace;font-size:15px;font-weight:500;letter-spacing:0.02em;color:var(--ink);text-shadow:0.02em 0 0 rgba(194,74,67,0.45),-0.02em 0 0 rgba(224,178,74,0.5);">only<span style="color:var(--red);">_</span>noise</a>
+    <div style="display:flex;gap:clamp(13px,2.2vw,28px);flex-wrap:wrap;justify-content:flex-end;">
+      <a href="#veil" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);" style-hover="color:var(--ink);">VEIL</a>
+      <a href="#aggregate" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);" style-hover="color:var(--ink);">Data</a>
+      <a href="#allies" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);" style-hover="color:var(--ink);">Links</a>
+      <a href="#readings" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);" style-hover="color:var(--ink);">Reading</a>
+      <button data-theme-toggle="" aria-label="Toggle light or dark theme" title="Light / dark">◐</button><a href="https://veil.only-noise.org" target="_blank" rel="noopener" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);" style-hover="color:var(--red);">VEIL ↗</a>
+    </div>
+  </nav><!-- VEIL -->
+  <section id="veil" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
+    <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
+      <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">01 &nbsp;·&nbsp; VEIL</div>
+      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-0.005em;color:var(--ink);margin:0 0 30px;max-width:15ch;">VEIL — the instrument you can hold.</h2>
+      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 40px;max-width:720px;">Most trip reports are written days later, tidied into a story. <span style="color:var(--ink);">VEIL</span> is a small, private instrument for catching the account closer to the source. On a phone or tablet, it listens as someone tells their experience, then names the phenomenology their own words already carry — and asks them to confirm or strike every reading. It is not a diagnosis and never advice. Everything happens on the device; nothing leaves it unless the teller chooses to share.</p>
+    </div>
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);border:1px solid rgba(var(--line),0.13);background:linear-gradient(180deg,rgba(var(--card1),0.6),rgba(var(--card2),0.6));padding:clamp(26px,3.5vw,46px);max-width:860px;">
+      <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid rgba(var(--line),0.10);padding-bottom:18px;margin-bottom:26px;">Now in testing &nbsp;·&nbsp; festivals &amp; online</div>
+      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 30px;">This season VEIL is being tested in two places: <span style="color:var(--ink);">at festivals</span> — a quiet field station on a single tablet, consent logged first — and <span style="color:var(--ink);">online</span>, open to anyone curious enough to walk through the tent. Every session a tester chooses to share makes the coding sharper. If you have carried an experience and want to help the instrument read it better, you are exactly who this is for.</p>
+      <a href="https://veil.only-noise.org" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:11px;font-family:'Martian Mono',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:16px 30px;">Enter VEIL <span style="font-size:15px;line-height:1;">↗</span></a>
+    </div>
+  </section>
+
+  <!-- AGGREGATE -->
+  <section id="aggregate" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
+    <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
+      <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">02 &nbsp;·&nbsp; Data</div>
+      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">What the reports show, together.</h2>
+      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.6vw,21px);line-height:1.6;color:var(--ink-2);margin:0 0 44px;max-width:640px;">A single account does not summarise well on its own. Read across many, recurring patterns become visible. The figures below are early and will grow as coding continues.</p>
+    </div>
+
+    <!-- REAL DATA — the coded reports -->
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);border:1px solid rgba(var(--line),0.13);background:linear-gradient(180deg,rgba(var(--card1),0.55),rgba(var(--card2),0.55));padding:clamp(24px,3.2vw,40px);margin-bottom:22px;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid rgba(var(--line),0.10);padding-bottom:16px;margin-bottom:26px;">
+        <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);">What recurs &nbsp;·&nbsp; first reports coded</div>
+        <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--dim);"><span class="on-dotlive"></span>EARLY &nbsp;·&nbsp; n = 13</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px;">
+        <div class="on-bar signal" data-w="92"><span class="on-lab">Trusted others present<small>a friend or partner in the room</small></span><span class="on-track"><span class="on-fill" style="width:92%;"></span></span><span class="on-pct">92%</span></div>
+        <div class="on-bar" data-w="85"><span class="on-lab">Positive feeling<small>warmth, joy, or ease</small></span><span class="on-track"><span class="on-fill" style="width:85%;"></span></span><span class="on-pct">85%</span></div>
+        <div class="on-bar" data-w="77"><span class="on-lab">Physical discomfort<small>nausea, heaviness</small></span><span class="on-track"><span class="on-fill" style="width:77%;"></span></span><span class="on-pct">77%</span></div>
+        <div class="on-bar" data-w="69"><span class="on-lab">Heightened bodily sensation<small>the body more present</small></span><span class="on-track"><span class="on-fill" style="width:69%;"></span></span><span class="on-pct">69%</span></div>
+        <div class="on-bar" data-w="69"><span class="on-lab">A private indoor setting<small>home, not a public space</small></span><span class="on-track"><span class="on-fill" style="width:69%;"></span></span><span class="on-pct">69%</span></div>
+        <div class="on-bar" data-w="54"><span class="on-lab">Watching one's own mind<small>observing your own thoughts</small></span><span class="on-track"><span class="on-fill" style="width:54%;"></span></span><span class="on-pct">54%</span></div>
+        <div class="on-bar" data-w="54"><span class="on-lab">A moment of insight<small>something seen differently</small></span><span class="on-track"><span class="on-fill" style="width:54%;"></span></span><span class="on-pct">54%</span></div>
+        <div class="on-bar" data-w="46"><span class="on-lab">Complex visions or imagery<small>eyes-closed or eyes-open scenes</small></span><span class="on-track"><span class="on-fill" style="width:46%;"></span></span><span class="on-pct">46%</span></div>
+      </div>
+      <div style="display:flex;gap:clamp(20px,5vw,64px);flex-wrap:wrap;border-top:1px solid rgba(var(--line),0.10);margin-top:28px;padding-top:22px;">
+        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--gold);line-height:1;">13</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">reports coded</div></div>
+        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">3</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">substance families</div></div>
+        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">446</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">features coded</div></div>
+        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">76</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">distinct features</div></div>
+      </div>
+      <p style="font-family:'STIX Two Text',serif;font-style:italic;font-size:14.5px;line-height:1.55;color:var(--mute);margin:22px 0 0;">Even at this scale the accounts cluster around company, the body, and feeling — where a person is, who they are with, and how it lands — as much as around any dramatic “peak” feature.</p>
+    </div>
+
+    <!-- ILLUSTRATIVE — questionnaire profiles across the literature (ASDB) -->
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);border:1px solid rgba(var(--line),0.09);padding:clamp(24px,3.2vw,40px);">
+      <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;">For scale &nbsp;·&nbsp; questionnaire profiles</div>
+      <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:var(--dim);margin-bottom:20px;">Illustrative — not this project's data.</div>
+      <svg viewBox="0 0 440 380" style="width:100%;max-width:480px;height:auto;display:block;margin:0 auto;overflow:visible;">
+        <g transform="translate(220 190)">
+          <!-- rings -->
+          <polygon points="0,-150 150,0 0,150 -150,0" fill="none" stroke="rgba(var(--line),0.07)"></polygon>
+          <polygon points="0,-112 112,0 0,112 -112,0" fill="none" stroke="rgba(var(--line),0.06)"></polygon>
+          <polygon points="0,-75 75,0 0,75 -75,0" fill="none" stroke="rgba(var(--line),0.05)"></polygon>
+          <polygon points="0,-37 37,0 0,37 -37,0" fill="none" stroke="rgba(var(--line),0.05)"></polygon>
+          <line x1="0" y1="-150" x2="0" y2="150" stroke="rgba(var(--line),0.06)"></line>
+          <line x1="-150" y1="0" x2="150" y2="0" stroke="rgba(var(--line),0.06)"></line>
+          <!-- illustrative profiles (faint) -->
+          <polygon points="0,-138 96,0 0,120 -128,0" fill="rgba(194,74,67,0.05)" stroke="rgba(194,74,67,0.32)" stroke-width="1.5"></polygon>
+          <polygon points="0,-108 132,0 0,88 -92,0" fill="rgba(var(--gold-rgb),0.05)" stroke="rgba(var(--gold-rgb),0.32)" stroke-width="1.5"></polygon>
+          <polygon points="0,-70 60,0 0,150 -70,0" fill="rgba(140,160,150,0.05)" stroke="rgba(160,170,160,0.28)" stroke-width="1.5"></polygon>
+          <!-- axis labels -->
+          <text x="0" y="-162" text-anchor="middle" style="font-family:'Martian Mono',monospace;font-size:10px;fill:var(--mute);">Ineffability</text>
+          <text x="166" y="0" text-anchor="start" dominant-baseline="middle" style="font-family:'Martian Mono',monospace;font-size:10px;fill:var(--mute);">Transcendence</text>
+          <text x="166" y="14" text-anchor="start" dominant-baseline="middle" style="font-family:'Martian Mono',monospace;font-size:10px;fill:var(--mute);">of time/space</text>
+          <text x="0" y="172" text-anchor="middle" style="font-family:'Martian Mono',monospace;font-size:10px;fill:var(--mute);">Positive Mood</text>
+          <text x="-166" y="0" text-anchor="end" dominant-baseline="middle" style="font-family:'Martian Mono',monospace;font-size:10px;fill:var(--mute);">Mystical</text>
+        </g>
+      </svg>
+      <p style="font-family:'Martian Mono',monospace;font-size:10px;line-height:1.6;letter-spacing:0.04em;color:var(--dim);margin:16px 0 0;text-align:center;">MEQ facet means across the literature. Source: Altered States Database (Prugger et al., 2022 · <a href="https://alteredstatesdb.org" target="_blank" rel="noopener" style="color:var(--mute);">alteredstatesdb.org</a>).</p>
+    </div>
+  </section>
+
+  <!-- ALLIES -->
+  <section id="allies" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
+    <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
+      <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">03 &nbsp;·&nbsp; Links</div>
+      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 44px;white-space:nowrap;">Friends &amp; kindred work.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,3vw,40px);margin-bottom:clamp(20px,3vw,40px);">
+      <a href="https://a-h.institute" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:flex;flex-direction:column;justify-content:space-between;gap:36px;border:1px solid rgba(var(--line),0.13);background:linear-gradient(150deg,rgba(var(--card1),0.5),rgba(var(--card2),0.5));padding:clamp(28px,3.2vw,42px);color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.5);">
+        <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);">Home institute</div>
+        <div>
+          <div style="font-family:'STIX Two Text',serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">Albert Hofmann Institute</div>
+          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">Kindred work at the border of altered states and rigorous attention. only_noise is part of the a—h.institute.</p>
+          <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--gold);">a-h.institute ↗</span>
+        </div>
+      </a>
+      <a href="https://psychonaut.guide" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .08s,transform 1s cubic-bezier(.2,.6,.2,1) .08s,border-color .4s ease;display:flex;flex-direction:column;justify-content:space-between;gap:36px;border:1px solid rgba(var(--line),0.13);background:linear-gradient(150deg,rgba(var(--card1),0.5),rgba(var(--card2),0.5));padding:clamp(28px,3.2vw,42px);color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.5);">
+        <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);">Kindred work</div>
+        <div>
+          <div style="font-family:'STIX Two Text',serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">psychonaut.guide</div>
+          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">A companion for the journey — guidance offered in the same spirit of care and close attention that this work is built on.</p>
+          <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--gold);">psychonaut.guide ↗</span>
+        </div>
+      </a>
+    </div>
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);margin-bottom:clamp(20px,3vw,40px);">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;">
+        <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mute);">External resources · the wider field</div>
+        <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--dim);">Kindred maps of the territory.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(var(--line),0.10);border:1px solid rgba(var(--line),0.10);">
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://asdb.info" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">ASDB</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">The Altered States Database — quantitative survey data on subjective effects.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://psychonautwiki.org" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">PsychonautWiki</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Community pharmacology and a structured index of subjective effects.</p>
+            
+              <a href="https://www.effectindex.com/effects" target="_blank" rel="noopener" style="display:block;margin-top:12px;padding-left:13px;border-left:1px solid rgba(var(--line),0.14);" style-hover="color:var(--red);">
+                <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--ink-2);">↳ Effect Index</span>
+                <span style="display:block;font-family:'STIX Two Text',serif;font-size:14px;color:var(--mute);">A catalogue of subjective effects, defined and illustrated.</span>
+              </a>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://psychedelicalpha.com/resources" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">Psychedelic Alpha</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Sector intelligence, data trackers and policy analysis.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://www.moreblossom.com" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">Blossom</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Research analysis and readable summaries of the literature.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://www.drugscience.org.uk/education" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">DrugScience</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Evidence-led, independent drug education.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://ebipsyche-database.org" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">EBIPsyche</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">An evidence-based database of psychedelic research.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://tripsit.me" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">TripSit</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Live harm-reduction chat, drug factsheets, and combination charts — practical support, freely given.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://euda.europa.eu" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">EUDA</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Independent European drug monitoring, data and harm-reduction guidance (formerly the EMCDDA).</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://hamiltonmorris.com" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">Hamilton’s Pharmacopeia</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Documentary work on the chemistry, history and culture of psychoactive substances.</p>
+            
+          </div>
+        
+          <div style="background:var(--panel);padding:20px 22px;">
+            <a href="https://michaelpollan.com/articles-archive/defending-our-consciousness-against-the-algorithms/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);">
+              <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">Pollan · Defending Consciousness</span>
+              <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
+            </a>
+            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">On protecting spontaneous thought and inner life from algorithmic capture (Nautilus, 2026).</p>
+            
+          </div>
+        
+      </div>
+    </div>
+    <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .12s,transform 1s cubic-bezier(.2,.6,.2,1) .12s;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;border:1px dashed rgba(var(--line),0.16);padding:clamp(26px,3.2vw,40px);">
+      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--ink-2);margin:0;max-width:52ch;">If your work rhymes with ours — phenomenology, field method, the honest study of the unrepeatable — write. We keep the circle small and the correspondence long.</p>
+      <a href="mailto:correspondence@only-noise.org" style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--gold);white-space:nowrap;" style-hover="color:var(--red);">correspondence@only-noise.org →</a>
+    </div>
+  </section>
+
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(22px,5vw,64px);"><div data-reveal="" style="opacity:0;transform:scaleX(0);transform-origin:left;transition:opacity 1.2s ease,transform 1.4s cubic-bezier(.4,0,.1,1);height:1px;background:linear-gradient(90deg,rgba(var(--line),0.28),rgba(var(--line),0.03));"></div></div>
+
+  <!-- READINGS -->
+  <section id="readings" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
+    <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
+      <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">04 &nbsp;·&nbsp; Reading</div>
+      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 14px;white-space:nowrap;">A map of the field.</h2>
+      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.4vw,20px);line-height:1.7;color:var(--mute);max-width:60ch;margin:0 0 20px;">Eleven annotated readings — the phenomenological tradition, psychedelic phenomenology proper, the set-and-setting question, and the computational methods this work draws on.</p>
+    </div>
+    <div style="max-width:880px;">
+      
+        <a href="https://philpapers.org/rec/VARNAM" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">01</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Varela (1996)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Neurophenomenology: a methodological remedy for the hard problem.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Journal of Consciousness Studies</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">The charter for treating rigorous first-person description and third-person neuroscience as one enterprise, each disciplining the other rather than working alone.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1007/7854_2016_459" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">02</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Preller & Vollenweider (2018)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Phenomenology, structure, and dynamics of psychedelic states.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Current Topics in Behavioral Neurosciences</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">A comprehensive map of the psychedelic state’s dimensions and their links to the standard instruments and their neural correlates — a single-source orientation.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.3389/fnhum.2017.00245" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">03</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Millière (2017)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Looking for the self: drug-induced ego dissolution.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Frontiers in Human Neuroscience</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">A careful anatomy of ego dissolution, distinguishing its several varieties — essential for one of the state’s most striking and theoretically loaded features.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1177/2050324516683325" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">04</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Hartogsohn (2017)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Constructing drug effects: a history of set and setting.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Drug Science, Policy and Law</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">How the field came to recognise that a drug’s effects are shaped by mindset and environment as much as by pharmacology. It frames the central question here.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1124/pr.118.017160" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">05</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Carhart-Harris & Friston (2019)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">REBUS and the anarchic brain.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Pharmacological Reviews</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">The influential “relaxed beliefs under psychedelics” model, linking phenomenology, self, and predictive processing into one theoretical backbone.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1038/s44184-024-00095-6" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">06</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Brouwer et al. (2025)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">A qualitative analysis of the mushroom come-up and come-down.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">npj Mental Health Research</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">Evidence that onset tends toward distress and the descent toward relief — a demonstration that phase, not only dose, carries meaning. It informs the phase-aware coding.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1002/brb3.70687" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">07</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">McGovern et al. (2025)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Deconstructing psychedelic phenomenology: discrete phases.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Brain and Behavior</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">People spontaneously narrate their experiences in stages, and each stage’s themes map onto set-and-setting factors — a model for the phase-structured approach.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1126/sciadv.abl6989" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">08</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Ballentine, Friedman & Bzdok (2022)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Trips and neurotransmitters: patterns across 6,850 experiences.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Science Advances</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">A landmark showing that natural-language methods can recover receptor-linked structure from thousands of free-form reports at scale.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.3389/fphar.2022.812227" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">09</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Tagliazucchi (2022)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Language as a window into the altered state of consciousness.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Frontiers in Pharmacology</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">How both what people say and how they say it can characterise — and help predict — the psychedelic state. It surveys the terrain this pipeline operates in.</p>
+          </div>
+        </a>
+      
+        <a href="https://www.researchsquare.com/article/rs-4670805/v1" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">10</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Bzdok et al. (2024)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Large language models auto-profile conscious awareness changes.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Research Square preprint</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">A proof of concept for LLM-scale annotation of experiential dimensions across free-form reports — the closest published parallel to the automated coding strand here.</p>
+          </div>
+        </a>
+      
+        <a href="https://doi.org/10.1038/s41598-025-22620-z" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:grid;grid-template-columns:44px 1fr;gap:clamp(14px,2vw,26px);border-top:1px solid rgba(var(--line),0.10);padding:26px 0;color:var(--ink);text-decoration:none;" style-hover="border-color:rgba(var(--gold-rgb),0.45);color:var(--gold);">
+          <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">11</div>
+          <div>
+            <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">Ermakova et al. (2025)</div>
+            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:inherit;margin-bottom:3px;">Mapping the phenomenology of intranasal 5-MeO-DMT in psychedelic-naïve adults.</div>
+            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">Scientific Reports</div>
+            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">A phase-1 trial that used microphenomenology and language analysis to map how a short-acting psychedelic unfolds over time — the clinical cousin of this project’s method.</p>
+          </div>
+        </a>
+      
+      <div style="border-top:1px solid rgba(var(--line),0.10);"></div>
+    </div>
+  </section>
+
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(22px,5vw,64px);"><div data-reveal="" style="opacity:0;transform:scaleX(0);transform-origin:left;transition:opacity 1.2s ease,transform 1.4s cubic-bezier(.4,0,.1,1);height:1px;background:linear-gradient(90deg,rgba(var(--line),0.28),rgba(var(--line),0.03));"></div></div>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid rgba(var(--line),0.08);background:var(--panel);">
+    <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,7vh,80px) clamp(22px,5vw,64px);display:flex;flex-wrap:wrap;gap:36px;justify-content:space-between;align-items:flex-start;">
+      <div style="max-width:34ch;">
+        <div style="font-family:'Martian Mono',monospace;font-size:16px;font-weight:500;color:var(--ink);margin-bottom:14px;">only<span style="color:var(--red);">_</span>noise</div>
+        <p style="font-family:'STIX Two Text',serif;font-style:italic;font-size:16.5px;line-height:1.6;color:var(--mute);margin:0;">The mind, described from the inside.</p>
+      </div>
+      <div style="display:flex;gap:clamp(30px,5vw,72px);flex-wrap:wrap;">
+        <div>
+          <div style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Index</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <a href="#veil" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">VEIL</a>
+            <a href="#aggregate" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Data</a>
+            <a href="#allies" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Links</a>
+            <a href="#readings" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Reading</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Elsewhere</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <a href="https://a-h.institute" target="_blank" rel="noopener" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">a—h.institute</a>
+            <a href="https://psychonaut.guide" target="_blank" rel="noopener" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">psychonaut.guide</a>
+            <a href="mailto:correspondence@only-noise.org" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Correspond</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1120px;margin:0 auto;padding:20px clamp(22px,5vw,64px) 40px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(var(--line),0.06);">
+      <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);">Part of the a—h.institute &nbsp;·&nbsp; © 2026</div>
+      <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);">Set in Geist · STIX Two Text · Martian Mono</div>
+    </div>
+  </footer>
+
+  
+<div class="pv-note">Static preview · atmosphere &amp; intro omitted · links live</div>
+</body></html>
