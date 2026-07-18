@@ -11,7 +11,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Martian+Mono:wght@300;400;500;600&family=Bodoni+Moda:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Martian+Mono:wght@300;400;500;600&family=Bodoni+Moda:ital,wght@1,500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0908; --bg-rgb:10,9,8; --panel:#0c0b09;
@@ -43,7 +43,7 @@
 #top{ background:#0a0908; }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'STIX Two Text',serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;transition:background .5s ease,color .5s ease;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Geist','STIX Two Text',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;transition:background .5s ease,color .5s ease;}
 ::selection{background:rgba(var(--gold-rgb),0.30);}
 a{color:var(--gold);text-decoration:none;transition:color .3s ease;}
 a:hover{color:var(--red);}
@@ -65,7 +65,7 @@ a:hover{color:var(--red);}
 @media (max-width:680px){[data-qbr]{display:block;}[data-q]{white-space:normal !important;text-align:center !important;}[data-qwrap]{width:auto !important;max-width:94vw;}}
 
 .on-bar{display:flex;align-items:flex-start;gap:16px;}
-.on-lab{flex:0 0 auto;width:clamp(150px,32%,270px);font-family:'STIX Two Text',serif;font-size:15px;color:var(--ink-2);line-height:1.25;}
+.on-lab{flex:0 0 auto;width:clamp(150px,32%,270px);font-family:'Geist','STIX Two Text',sans-serif;font-size:15px;color:var(--ink-2);line-height:1.25;}
 .on-lab small{display:block;font-family:'Martian Mono',monospace;font-size:9.5px;letter-spacing:0.02em;color:var(--dim);text-transform:none;margin-top:3px;}
 .on-track{flex:1 1 auto;height:8px;margin-top:4px;background:rgba(var(--line),0.07);position:relative;overflow:hidden;}
 .on-fill{position:absolute;left:0;top:0;bottom:0;background:rgba(var(--line),0.20);}
@@ -76,6 +76,18 @@ a:hover{color:var(--red);}
 [data-theme-toggle]{background:none;border:none;cursor:pointer;padding:4px 6px;line-height:1;font-size:14px;color:var(--mute);transition:color .3s ease,transform .5s ease;}
 [data-theme-toggle]:hover{color:var(--gold);}
 :root[data-theme="light"] [data-theme-toggle]{transform:rotate(180deg);}
+
+/* --- tool-like: serif reserved for display headings, Geist for body/UI --- */
+h1,h2,h3{font-family:'STIX Two Text',serif !important;}
+/* technical framing: viewfinder corner brackets */
+[data-frame]{position:fixed;inset:9px;z-index:55;pointer-events:none;}
+.fc{position:absolute;width:13px;height:13px;border-color:rgba(var(--line),0.22);border-style:solid;border-width:0;}
+.fc.tl{top:0;left:0;border-top-width:1px;border-left-width:1px;}
+.fc.tr{top:0;right:0;border-top-width:1px;border-right-width:1px;}
+.fc.bl{bottom:0;left:0;border-bottom-width:1px;border-left-width:1px;}
+.fc.br{bottom:0;right:0;border-bottom-width:1px;border-right-width:1px;}
+/* telemetry status dot */
+.on-dotlive{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:7px;vertical-align:middle;box-shadow:0 0 6px rgba(var(--gold-rgb),0.7);}
 </style>
 </helmet>
 
@@ -97,7 +109,9 @@ a:hover{color:var(--red);}
   <div data-grain="" style="position:fixed;top:-50%;left:-50%;width:200%;height:200%;z-index:80;pointer-events:none;opacity:var(--grain-op,0.05);mix-blend-mode:soft-light;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23n%29'/%3E%3C/svg%3E&quot;);animation:onGrain 7s steps(6) infinite;"></div>
   <div style="position:fixed;inset:0;z-index:79;pointer-events:none;opacity:var(--vig-op,1);background:radial-gradient(130% 100% at 50% 32%, transparent 46%, rgba(0,0,0,0.34) 78%, rgba(0,0,0,0.66) 100%);"></div>
 
-  <nav style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:17px clamp(20px,5vw,60px);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);background:linear-gradient(180deg,rgba(var(--bg-rgb),0.74),rgba(var(--bg-rgb),0));">
+  <div data-frame="" aria-hidden="true"><i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i></div>
+
+  <nav style="position:fixed;top:14px;left:14px;right:14px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,2.4vw,26px);border-radius:15px;border:1px solid rgba(var(--line),0.13);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);background:rgba(var(--bg-rgb),0.5);box-shadow:0 10px 34px rgba(0,0,0,0.30);">
     <a href="#top" style="font-family:'Martian Mono',monospace;font-size:15px;font-weight:500;letter-spacing:0.02em;color:var(--ink);">only<span style="color:var(--red);">_</span>noise</a>
     <div style="display:flex;gap:clamp(13px,2.2vw,28px);flex-wrap:wrap;justify-content:flex-end;">
       <a href="#thesis" style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mute);" style-hover="color:var(--ink);">Thesis</a>
@@ -120,7 +134,7 @@ a:hover{color:var(--red);}
     </div>
     <h1 data-glitchmark="" style="font-family:'Bodoni Moda',serif;font-style:italic;font-weight:600;font-size:clamp(15px,2.3vw,22px);letter-spacing:0.01em;color:var(--ink);margin:0 0 22px;animation:onMarkGlitch 5.5s infinite;">only<span style="color:var(--red);">_</span>noise</h1>
     <p style="font-family:'Martian Mono',monospace;font-weight:400;font-size:clamp(19px,2.5vw,27px);line-height:1.15;letter-spacing:-0.015em;color:var(--ink);margin:0;max-width:20ch;">The mind described<br><em style="font-style:italic;">from the inside.</em></p>
-    <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.7vw,22px);line-height:1.6;color:var(--ink-3);max-width:52ch;margin:24px auto 0;">Independent research into the structure of psychedelic experience.</p>
+    <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.7vw,22px);line-height:1.6;color:var(--ink-3);max-width:52ch;margin:24px auto 0;">Independent research into the structure of psychedelic experience.</p>
     <a href="#thesis" data-begin="" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;color:var(--dim);" style-hover="color:var(--gold);">
       <span style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">Begin</span>
       <span style="display:block;width:1px;height:34px;background:linear-gradient(180deg,currentColor,transparent);animation:onFloat 3.2s ease-in-out infinite;"></span>
@@ -132,10 +146,10 @@ a:hover{color:var(--red);}
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">01 &nbsp;·&nbsp; Thesis</div>
     </div>
-    <p data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .08s,transform 1s cubic-bezier(.2,.6,.2,1) .08s;font-family:'STIX Two Text',serif;font-size:clamp(20px,2vw,26px);line-height:1.5;color:var(--ink-2);margin:0 0 46px;font-style:italic;text-wrap:balance;">Psychedelic phenomenology is where two disciplines meet.</p>
+    <p data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .08s,transform 1s cubic-bezier(.2,.6,.2,1) .08s;font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(20px,2vw,26px);line-height:1.5;color:var(--ink-2);margin:0 0 46px;font-style:italic;text-wrap:balance;">Psychedelic phenomenology is where two disciplines meet.</p>
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .12s,transform 1s cubic-bezier(.2,.6,.2,1) .12s;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(28px,4vw,64px);max-width:940px;">
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.4vw,21px);line-height:1.72;color:var(--ink-2);margin:0;">It is the careful study of what an experience is actually like — coded, compared across many people, and never flattened into a checklist or discarded as noise. Phenomenology is the study of experience from the inside: not the receptor or the behaviour, but the way a situation actually shows up for the person living it. For a science of the mind, that first-person account is not decoration. It is data.</p>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.4vw,21px);line-height:1.72;color:var(--ink-2);margin:0;">A single dose can bring serenity in one session and terror in the next, and that variability is not random. It is shaped by mindset and environment — <span style="color:var(--gold);font-style:italic;">set and setting</span> — as much as by pharmacology. How context steers the experience is the open problem this work is built around. only_noise is small and slow by choice, and part of the Albert Hofmann Institute.</p>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.4vw,21px);line-height:1.72;color:var(--ink-2);margin:0;">It is the careful study of what an experience is actually like — coded, compared across many people, and never flattened into a checklist or discarded as noise. Phenomenology is the study of experience from the inside: not the receptor or the behaviour, but the way a situation actually shows up for the person living it. For a science of the mind, that first-person account is not decoration. It is data.</p>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.4vw,21px);line-height:1.72;color:var(--ink-2);margin:0;">A single dose can bring serenity in one session and terror in the next, and that variability is not random. It is shaped by mindset and environment — <span style="color:var(--gold);font-style:italic;">set and setting</span> — as much as by pharmacology. How context steers the experience is the open problem this work is built around. only_noise is small and slow by choice, and part of the Albert Hofmann Institute.</p>
     </div>
   </section>
 
@@ -150,13 +164,13 @@ a:hover{color:var(--red);}
       <sc-for list="{{ defs }}" as="d" hint-placeholder-count="4">
         <div data-reveal="" style="opacity:0;transform:translateY(22px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);background:var(--panel);padding:clamp(26px,3vw,40px);">
           <div style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">{{ d.term }}</div>
-          <div style="font-family:'STIX Two Text',serif;font-size:clamp(16px,1.5vw,19px);color:var(--ink-3);line-height:1.3;margin-bottom:8px;">{{ d.greek }}</div>
+          <div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(16px,1.5vw,19px);color:var(--ink-3);line-height:1.3;margin-bottom:8px;">{{ d.greek }}</div>
           <div style="font-family:'Martian Mono',monospace;font-size:12px;letter-spacing:0.04em;color:var(--ink-2);margin-bottom:20px;">{{ d.translit }}</div>
-          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.66;color:var(--ink-3);margin:0;">{{ d.gloss }}</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16.5px;line-height:1.66;color:var(--ink-3);margin:0;">{{ d.gloss }}</p>
         </div>
       </sc-for>
     </div>
-    <p data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);font-family:'STIX Two Text',serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.6;color:var(--ink-2);max-width:58ch;margin:40px auto 0;text-align:center;">Three of the four share <span style="font-style:normal;color:var(--gold);">ψυχή</span>. The soul is the recurring root.</p>
+    <p data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.6;color:var(--ink-2);max-width:58ch;margin:40px auto 0;text-align:center;">Three of the four share <span style="font-style:normal;color:var(--gold);">ψυχή</span>. The soul is the recurring root.</p>
   </section>
 
   <!-- METHOD -->
@@ -164,18 +178,18 @@ a:hover{color:var(--red);}
     <div style="max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">03 &nbsp;·&nbsp; The work</div>
-        <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;white-space:nowrap;">How an experience is read.</h2>
-        <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.5vw,22px);line-height:1.66;color:var(--ink-2);max-width:60ch;margin:0 0 56px;">The work turns first-person psychedelic narratives into structured, analysable data — without flattening the detail that makes them worth studying.<br><br>Each account is read feature by feature against a defined codebook. Higher-order constructs are reconstructed from the confirmed features, never assigned directly; where the text is ambiguous the code is left unassigned — under-reading is preferred to over-reading. VEIL is the field half of the work; behind it sits a second, more involved layer that reads written reports at larger scale against the same scheme. A human remains the final interpreter.</p>
+        <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;white-space:nowrap;">How an experience is read.</h2>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.5vw,22px);line-height:1.66;color:var(--ink-2);max-width:60ch;margin:0 0 56px;">The work turns first-person psychedelic narratives into structured, analysable data — without flattening the detail that makes them worth studying.<br><br>Each account is read feature by feature against a defined codebook. Higher-order constructs are reconstructed from the confirmed features, never assigned directly; where the text is ambiguous the code is left unassigned — under-reading is preferred to over-reading. VEIL is the field half of the work; behind it sits a second, more involved layer that reads written reports at larger scale against the same scheme. A human remains the final interpreter.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:rgba(var(--line),0.11);border:1px solid rgba(var(--line),0.11);">
         <sc-for list="{{ strands }}" as="s" hint-placeholder-count="2">
           <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);background:var(--bg);padding:clamp(28px,3.2vw,44px);">
             <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">{{ s.tag }}</div>
-            <h3 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(18px,1.6vw,22px);line-height:1.15;color:var(--ink);margin:0 0 18px;white-space:nowrap;">{{ s.name }}</h3>
-            <p style="font-family:'STIX Two Text',serif;font-size:17.5px;line-height:1.66;color:var(--ink-2);margin:0 0 22px;">{{ s.body }}</p>
+            <h3 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(18px,1.6vw,22px);line-height:1.15;color:var(--ink);margin:0 0 18px;white-space:nowrap;">{{ s.name }}</h3>
+            <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:17.5px;line-height:1.66;color:var(--ink-2);margin:0 0 22px;">{{ s.body }}</p>
             <div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(var(--line),0.10);padding-top:20px;">
               <sc-for list="{{ s.points }}" as="pt" hint-placeholder-count="3">
-                <div style="display:grid;grid-template-columns:16px 1fr;gap:10px;font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--ink-3);">
+                <div style="display:grid;grid-template-columns:16px 1fr;gap:10px;font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--ink-3);">
                   <span style="font-family:'Martian Mono',monospace;color:var(--dim);">—</span><span>{{ pt }}</span>
                 </div>
               </sc-for>
@@ -191,46 +205,46 @@ a:hover{color:var(--red);}
   <section id="context" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">04 &nbsp;·&nbsp; Context</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">Where the experience sits.</h2>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.6vw,22px);line-height:1.6;color:var(--ink-2);margin:0 0 52px;max-width:640px;">Set and setting are usually described at the scale of the room — mood, company, surroundings. But the room sits inside a legal system, an economy, and a set of cultural stories, and those larger conditions shape an experience as surely as the near ones do. Treating context as a variable means taking that wider frame seriously rather than stopping at the walls.</p>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">Where the experience sits.</h2>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.6vw,22px);line-height:1.6;color:var(--ink-2);margin:0 0 52px;max-width:640px;">Set and setting are usually described at the scale of the room — mood, company, surroundings. But the room sits inside a legal system, an economy, and a set of cultural stories, and those larger conditions shape an experience as surely as the near ones do. Treating context as a variable means taking that wider frame seriously rather than stopping at the walls.</p>
     </div>
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,4vw,56px);max-width:940px;">
       <div>
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Criminalisation as setting</div>
-        <p style="font-family:'STIX Two Text',serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">Where a substance is illegal, use is shaped by secrecy, by uncertain dose and purity, and by the absence of aftercare, against a background of legal risk. Each belongs to the setting, and each can enter the phenomenology — as caution held in the body, as isolation, as the tenor of a difficult passage. A report written under prohibition describes an experience that prohibition helped shape.</p>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">Where a substance is illegal, use is shaped by secrecy, by uncertain dose and purity, and by the absence of aftercare, against a background of legal risk. Each belongs to the setting, and each can enter the phenomenology — as caution held in the body, as isolation, as the tenor of a difficult passage. A report written under prohibition describes an experience that prohibition helped shape.</p>
       </div>
       <div>
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">The research is not neutral ground</div>
-        <p style="font-family:'STIX Two Text',serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">The same conditions constrain what can be studied. For decades controlled research was heavily restricted, and much of what survives about non-clinical use is first-person report precisely because other channels were closed. What can be funded, published, and safely reported is shaped by policy; naturalistic corpora are in part an artefact of that history.</p>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">The same conditions constrain what can be studied. For decades controlled research was heavily restricted, and much of what survives about non-clinical use is first-person report precisely because other channels were closed. What can be funded, published, and safely reported is shaped by policy; naturalistic corpora are in part an artefact of that history.</p>
       </div>
       <div>
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Two public stories</div>
-        <p style="font-family:'STIX Two Text',serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">These substances tend to be narrated in cycles — moral panic, then therapeutic promise. Neither describes the phenomenon well: the first dismisses the account, the second polishes it for use. Under-coding, tracking difficulty as its own measure, and saying only what the text supports are, in part, a correction to both.</p>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">These substances tend to be narrated in cycles — moral panic, then therapeutic promise. Neither describes the phenomenon well: the first dismisses the account, the second polishes it for use. Under-coding, tracking difficulty as its own measure, and saying only what the text supports are, in part, a correction to both.</p>
       </div>
       <div>
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Attention &amp; cognitive liberty</div>
-        <p style="font-family:'STIX Two Text',serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">The current wave of interest is also a market — investment, intellectual property, and media attention shape which experiences count as legitimate and which are passed over. Cognitive liberty — that a person's inner states are their own, and that reliable knowledge about them is worth protecting — is the position this work operates from.</p>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-3);margin:0;">The current wave of interest is also a market — investment, intellectual property, and media attention shape which experiences count as legitimate and which are passed over. Cognitive liberty — that a person's inner states are their own, and that reliable knowledge about them is worth protecting — is the position this work operates from.</p>
       </div>
     </div>
-    <p data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);font-family:'STIX Two Text',serif;font-style:italic;font-size:clamp(19px,1.8vw,24px);line-height:1.55;color:var(--ink-2);max-width:60ch;margin:52px 0 0;text-wrap:balance;">Between prohibition, which produces ignorance, and promotion, which produces a flattened story, there is a third option: careful, structured, first-person observation — held to a method, honest about its limits. That is what structured psychonautics names here.</p>
+    <p data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:clamp(19px,1.8vw,24px);line-height:1.55;color:var(--ink-2);max-width:60ch;margin:52px 0 0;text-wrap:balance;">Between prohibition, which produces ignorance, and promotion, which produces a flattened story, there is a third option: careful, structured, first-person observation — held to a method, honest about its limits. That is what structured psychonautics names here.</p>
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);margin-top:48px;">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mute);margin-bottom:20px;">Further</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(var(--line),0.10);border:1px solid rgba(var(--line),0.10);">
         <div style="background:var(--panel);padding:20px 22px;">
           <a href="https://euda.europa.eu" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);"><span style="font-family:'Martian Mono',monospace;font-size:13px;color:var(--ink);">EUDA</span><span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span></a>
-          <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Independent European drug monitoring, data, and harm-reduction guidance (formerly the EMCDDA).</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Independent European drug monitoring, data, and harm-reduction guidance (formerly the EMCDDA).</p>
         </div>
         <div style="background:var(--panel);padding:20px 22px;">
           <a href="https://tripsit.me" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);"><span style="font-family:'Martian Mono',monospace;font-size:13px;color:var(--ink);">TripSit</span><span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span></a>
-          <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Live harm-reduction chat and drug factsheets — the practical layer this project's ethics assume.</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Live harm-reduction chat and drug factsheets — the practical layer this project's ethics assume.</p>
         </div>
         <div style="background:var(--panel);padding:20px 22px;">
           <a href="https://hamiltonmorris.com" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);"><span style="font-family:'Martian Mono',monospace;font-size:13px;color:var(--ink);">Hamilton's Pharmacopeia</span><span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span></a>
-          <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Documentary work on the chemistry, history, and culture of psychoactive substances — literacy in place of sensation.</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">Documentary work on the chemistry, history, and culture of psychoactive substances — literacy in place of sensation.</p>
         </div>
         <div style="background:var(--panel);padding:20px 22px;">
           <a href="https://michaelpollan.com/articles-archive/defending-our-consciousness-against-the-algorithms/" target="_blank" rel="noopener" style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;" style-hover="color:var(--red);"><span style="font-family:'Martian Mono',monospace;font-size:13px;color:var(--ink);">Pollan · Defending Consciousness</span><span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span></a>
-          <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">On protecting spontaneous thought and inner life from algorithmic capture (Nautilus, 2026).</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">On protecting spontaneous thought and inner life from algorithmic capture (Nautilus, 2026).</p>
         </div>
       </div>
     </div>
@@ -240,15 +254,15 @@ a:hover{color:var(--red);}
   <section id="journal" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px) clamp(90px,13vh,170px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">05 &nbsp;·&nbsp; Journal</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 48px;white-space:nowrap;">Notes, in the open.</h2>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 48px;white-space:nowrap;">Notes, in the open.</h2>
     </div>
     <div style="display:flex;flex-direction:column;">
       <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
         <button onClick="{{ p.open }}" data-reveal="" style="opacity:0;transform:translateY(22px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1),border-color .4s ease;text-align:left;background:none;border:none;border-top:1px solid rgba(var(--line),0.12);cursor:pointer;display:grid;grid-template-columns:120px 1fr auto;gap:clamp(16px,3vw,44px);align-items:baseline;padding:clamp(24px,3vw,38px) 4px;color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.55);">
           <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.1em;color:var(--mute);">{{ p.date }}</div>
           <div>
-            <h3 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(23px,2.6vw,32px);line-height:1.1;color:var(--ink);margin:0 0 10px;">{{ p.title }}</h3>
-            <p style="font-family:'STIX Two Text',serif;font-size:18px;line-height:1.6;color:var(--ink-3);margin:0;max-width:60ch;">{{ p.excerpt }}</p>
+            <h3 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(23px,2.6vw,32px);line-height:1.1;color:var(--ink);margin:0 0 10px;">{{ p.title }}</h3>
+            <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:18px;line-height:1.6;color:var(--ink-3);margin:0;max-width:60ch;">{{ p.excerpt }}</p>
           </div>
           <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);white-space:nowrap;">{{ p.read }} →</div>
         </button>
@@ -261,12 +275,12 @@ a:hover{color:var(--red);}
   <section id="field" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">06 &nbsp;·&nbsp; Field</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-0.005em;color:var(--ink);margin:0 0 30px;max-width:15ch;">VEIL — the instrument you can hold.</h2>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 40px;max-width:720px;">Most trip reports are written days later, tidied into a story. <span style="color:var(--ink);">VEIL</span> is a small, private instrument for catching the account closer to the source. On a phone or tablet, it listens as someone tells their experience, then names the phenomenology their own words already carry — and asks them to confirm or strike every reading. It is not a diagnosis and never advice. Everything happens on the device; nothing leaves it unless the teller chooses to share.</p>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-0.005em;color:var(--ink);margin:0 0 30px;max-width:15ch;">VEIL — the instrument you can hold.</h2>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 40px;max-width:720px;">Most trip reports are written days later, tidied into a story. <span style="color:var(--ink);">VEIL</span> is a small, private instrument for catching the account closer to the source. On a phone or tablet, it listens as someone tells their experience, then names the phenomenology their own words already carry — and asks them to confirm or strike every reading. It is not a diagnosis and never advice. Everything happens on the device; nothing leaves it unless the teller chooses to share.</p>
     </div>
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);border:1px solid rgba(var(--line),0.13);background:linear-gradient(180deg,rgba(var(--card1),0.6),rgba(var(--card2),0.6));padding:clamp(26px,3.5vw,46px);max-width:860px;">
       <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid rgba(var(--line),0.10);padding-bottom:18px;margin-bottom:26px;">Now in testing &nbsp;·&nbsp; festivals &amp; online</div>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 30px;">This season VEIL is being tested in two places: <span style="color:var(--ink);">at festivals</span> — a quiet field station on a single tablet, consent logged first — and <span style="color:var(--ink);">online</span>, open to anyone curious enough to walk through the tent. Every session a tester chooses to share makes the coding sharper. If you have carried an experience and want to help the instrument read it better, you are exactly who this is for.</p>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.7vw,23px);line-height:1.66;color:var(--ink-2);margin:0 0 30px;">This season VEIL is being tested in two places: <span style="color:var(--ink);">at festivals</span> — a quiet field station on a single tablet, consent logged first — and <span style="color:var(--ink);">online</span>, open to anyone curious enough to walk through the tent. Every session a tester chooses to share makes the coding sharper. If you have carried an experience and want to help the instrument read it better, you are exactly who this is for.</p>
       <a href="https://veil.only-noise.org" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:11px;font-family:'Martian Mono',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:16px 30px;">Enter VEIL <span style="font-size:15px;line-height:1;">↗</span></a>
     </div>
   </section>
@@ -275,15 +289,15 @@ a:hover{color:var(--red);}
   <section id="aggregate" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">07 &nbsp;·&nbsp; Data</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">What the reports show, together.</h2>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.6vw,21px);line-height:1.6;color:var(--ink-2);margin:0 0 44px;max-width:640px;">A single account does not summarise well on its own. Read across many, recurring patterns become visible. The figures below are early and will grow as coding continues.</p>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">What the reports show, together.</h2>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(17px,1.6vw,21px);line-height:1.6;color:var(--ink-2);margin:0 0 44px;max-width:640px;">A single account does not summarise well on its own. Read across many, recurring patterns become visible. The figures below are early and will grow as coding continues.</p>
     </div>
 
     <!-- REAL DATA — the coded reports -->
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);border:1px solid rgba(var(--line),0.13);background:linear-gradient(180deg,rgba(var(--card1),0.55),rgba(var(--card2),0.55));padding:clamp(24px,3.2vw,40px);margin-bottom:22px;">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid rgba(var(--line),0.10);padding-bottom:16px;margin-bottom:26px;">
         <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mute);">What recurs &nbsp;·&nbsp; first reports coded</div>
-        <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--dim);">present in&nbsp;__&nbsp;of&nbsp;13</div>
+        <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--dim);"><span class="on-dotlive"></span>EARLY &nbsp;·&nbsp; n = 13</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:11px;">
         <div class="on-bar signal" data-w="92"><span class="on-lab">Trusted others present<small>a friend or partner in the room</small></span><span class="on-track"><span class="on-fill" style="width:92%;"></span></span><span class="on-pct">92%</span></div>
@@ -296,12 +310,12 @@ a:hover{color:var(--red);}
         <div class="on-bar" data-w="46"><span class="on-lab">Complex visions or imagery<small>eyes-closed or eyes-open scenes</small></span><span class="on-track"><span class="on-fill" style="width:46%;"></span></span><span class="on-pct">46%</span></div>
       </div>
       <div style="display:flex;gap:clamp(20px,5vw,64px);flex-wrap:wrap;border-top:1px solid rgba(var(--line),0.10);margin-top:28px;padding-top:22px;">
-        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--gold);line-height:1;">13</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">reports coded</div></div>
-        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">3</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">substance families</div></div>
-        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">446</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">features coded</div></div>
-        <div><div style="font-family:'STIX Two Text',serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">76</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">distinct features</div></div>
+        <div><div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(26px,3vw,38px);color:var(--gold);line-height:1;">13</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">reports coded</div></div>
+        <div><div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">3</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">substance families</div></div>
+        <div><div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">446</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">features coded</div></div>
+        <div><div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(26px,3vw,38px);color:var(--ink);line-height:1;">76</div><div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--mute);margin-top:8px;">distinct features</div></div>
       </div>
-      <p style="font-family:'STIX Two Text',serif;font-style:italic;font-size:14.5px;line-height:1.55;color:var(--mute);margin:22px 0 0;">Even at this scale the accounts cluster around company, the body, and feeling — where a person is, who they are with, and how it lands — as much as around any dramatic “peak” feature.</p>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:14.5px;line-height:1.55;color:var(--mute);margin:22px 0 0;">Even at this scale the accounts cluster around company, the body, and feeling — where a person is, who they are with, and how it lands — as much as around any dramatic “peak” feature.</p>
     </div>
 
     <!-- ILLUSTRATIVE — questionnaire profiles across the literature (ASDB) -->
@@ -337,30 +351,30 @@ a:hover{color:var(--red);}
   <section id="allies" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">08 &nbsp;·&nbsp; Allies</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 44px;white-space:nowrap;">Friends &amp; kindred work.</h2>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 44px;white-space:nowrap;">Friends &amp; kindred work.</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(20px,3vw,40px);margin-bottom:clamp(20px,3vw,40px);">
       <a href="https://a-h.institute" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1),border-color .4s ease;display:flex;flex-direction:column;justify-content:space-between;gap:36px;border:1px solid rgba(var(--line),0.13);background:linear-gradient(150deg,rgba(var(--card1),0.5),rgba(var(--card2),0.5));padding:clamp(28px,3.2vw,42px);color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.5);">
         <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);">Home institute</div>
         <div>
-          <div style="font-family:'STIX Two Text',serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">Albert Hofmann Institute</div>
-          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">Kindred work at the border of altered states and rigorous attention. only_noise is part of the a—h.institute.</p>
+          <div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">Albert Hofmann Institute</div>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">Kindred work at the border of altered states and rigorous attention. only_noise is part of the a—h.institute.</p>
           <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--gold);">a-h.institute ↗</span>
         </div>
       </a>
       <a href="https://psychonaut.guide" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .08s,transform 1s cubic-bezier(.2,.6,.2,1) .08s,border-color .4s ease;display:flex;flex-direction:column;justify-content:space-between;gap:36px;border:1px solid rgba(var(--line),0.13);background:linear-gradient(150deg,rgba(var(--card1),0.5),rgba(var(--card2),0.5));padding:clamp(28px,3.2vw,42px);color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.5);">
         <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);">Kindred work</div>
         <div>
-          <div style="font-family:'STIX Two Text',serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">psychonaut.guide</div>
-          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">A companion for the journey — guidance offered in the same spirit of care and close attention that this work is built on.</p>
+          <div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">psychonaut.guide</div>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">A companion for the journey — guidance offered in the same spirit of care and close attention that this work is built on.</p>
           <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--gold);">psychonaut.guide ↗</span>
         </div>
       </a>
       <a href="https://tripsit.me" target="_blank" rel="noopener" data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .08s,transform 1s cubic-bezier(.2,.6,.2,1) .08s,border-color .4s ease;display:flex;flex-direction:column;justify-content:space-between;gap:36px;border:1px solid rgba(var(--line),0.13);background:linear-gradient(150deg,rgba(var(--card1),0.5),rgba(var(--card2),0.5));padding:clamp(28px,3.2vw,42px);color:inherit;" style-hover="border-color:rgba(var(--gold-rgb),0.5);">
         <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);">Harm reduction</div>
         <div>
-          <div style="font-family:'STIX Two Text',serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">tripsit.me</div>
-          <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">Live harm-reduction chat, drug factsheets, and combination charts — practical support, freely given.</p>
+          <div style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(28px,3.4vw,42px);color:var(--ink);line-height:1.05;margin-bottom:14px;">tripsit.me</div>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16.5px;line-height:1.6;color:var(--ink-3);max-width:42ch;margin:0 0 18px;">Live harm-reduction chat, drug factsheets, and combination charts — practical support, freely given.</p>
           <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--gold);">tripsit.me</span>
         </div>
       </a>
@@ -368,7 +382,7 @@ a:hover{color:var(--red);}
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);margin-bottom:clamp(20px,3vw,40px);">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;">
         <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mute);">External resources · the wider field</div>
-        <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--dim);">Kindred maps of the territory.</div>
+        <div style="font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:15px;color:var(--dim);">Kindred maps of the territory.</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(var(--line),0.10);border:1px solid rgba(var(--line),0.10);">
         <sc-for list="{{ resources }}" as="r" hint-placeholder-count="6">
@@ -377,11 +391,11 @@ a:hover{color:var(--red);}
               <span style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--ink);">{{ r.name }}</span>
               <span style="font-family:'Martian Mono',monospace;font-size:11px;color:var(--dim);">↗</span>
             </a>
-            <p style="font-family:'STIX Two Text',serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">{{ r.sub }}</p>
+            <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:15.5px;line-height:1.55;color:var(--mute);margin:7px 0 0;">{{ r.sub }}</p>
             <sc-if value="{{ r.child }}">
               <a href="{{ r.child.href }}" target="_blank" rel="noopener" style="display:block;margin-top:12px;padding-left:13px;border-left:1px solid rgba(var(--line),0.14);" style-hover="color:var(--red);">
                 <span style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--ink-2);">↳ {{ r.child.name }}</span>
-                <span style="display:block;font-family:'STIX Two Text',serif;font-size:14px;color:var(--mute);">{{ r.child.sub }}</span>
+                <span style="display:block;font-family:'Geist','STIX Two Text',sans-serif;font-size:14px;color:var(--mute);">{{ r.child.sub }}</span>
               </a>
             </sc-if>
           </div>
@@ -389,7 +403,7 @@ a:hover{color:var(--red);}
       </div>
     </div>
     <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.6,.2,1) .12s,transform 1s cubic-bezier(.2,.6,.2,1) .12s;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;border:1px dashed rgba(var(--line),0.16);padding:clamp(26px,3.2vw,40px);">
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--ink-2);margin:0;max-width:52ch;">If your work rhymes with ours — phenomenology, field method, the honest study of the unrepeatable — write. We keep the circle small and the correspondence long.</p>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:var(--ink-2);margin:0;max-width:52ch;">If your work rhymes with ours — phenomenology, field method, the honest study of the unrepeatable — write. We keep the circle small and the correspondence long.</p>
       <a href="mailto:correspondence@only-noise.org" style="font-family:'Martian Mono',monospace;font-size:13px;letter-spacing:0.02em;color:var(--gold);white-space:nowrap;" style-hover="color:var(--red);">correspondence@only-noise.org →</a>
     </div>
   </section>
@@ -400,8 +414,8 @@ a:hover{color:var(--red);}
   <section id="readings" style="scroll-margin-top:80px;max-width:1120px;margin:0 auto;padding:clamp(72px,11vh,150px) clamp(22px,5vw,64px);">
     <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity 1s cubic-bezier(.2,.6,.2,1),transform 1s cubic-bezier(.2,.6,.2,1);">
       <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mute);margin-bottom:24px;">09 &nbsp;·&nbsp; Reading</div>
-      <h2 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 14px;white-space:nowrap;">A map of the field.</h2>
-      <p style="font-family:'STIX Two Text',serif;font-size:clamp(17px,1.4vw,20px);line-height:1.7;color:var(--mute);max-width:60ch;margin:0 0 20px;">Eleven annotated readings — the phenomenological tradition, psychedelic phenomenology proper, the set-and-setting question, and the computational methods this work draws on.</p>
+      <h2 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 14px;white-space:nowrap;">A map of the field.</h2>
+      <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(17px,1.4vw,20px);line-height:1.7;color:var(--mute);max-width:60ch;margin:0 0 20px;">Eleven annotated readings — the phenomenological tradition, psychedelic phenomenology proper, the set-and-setting question, and the computational methods this work draws on.</p>
     </div>
     <div style="max-width:880px;">
       <sc-for list="{{ readings }}" as="r" hint-placeholder-count="6">
@@ -409,9 +423,9 @@ a:hover{color:var(--red);}
           <div style="font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);padding-top:4px;">{{ r.n }}</div>
           <div>
             <div style="font-family:'Martian Mono',monospace;font-size:11px;letter-spacing:0.06em;color:var(--gold);margin-bottom:8px;">{{ r.who }}</div>
-            <div style="font-family:'STIX Two Text',serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:var(--ink);margin-bottom:3px;">{{ r.title }}</div>
-            <div style="font-family:'STIX Two Text',serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">{{ r.venue }}</div>
-            <p style="font-family:'STIX Two Text',serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">{{ r.note }}</p>
+            <div style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:500;font-size:clamp(18px,1.5vw,21px);line-height:1.4;color:var(--ink);margin-bottom:3px;">{{ r.title }}</div>
+            <div style="font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:15px;color:var(--mute);margin-bottom:12px;">{{ r.venue }}</div>
+            <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16.5px;line-height:1.62;color:var(--ink-3);margin:0;max-width:64ch;">{{ r.note }}</p>
           </div>
         </div>
       </sc-for>
@@ -426,31 +440,31 @@ a:hover{color:var(--red);}
     <div style="max-width:1120px;margin:0 auto;padding:clamp(48px,7vh,80px) clamp(22px,5vw,64px);display:flex;flex-wrap:wrap;gap:36px;justify-content:space-between;align-items:flex-start;">
       <div style="max-width:34ch;">
         <div style="font-family:'Martian Mono',monospace;font-size:16px;font-weight:500;color:var(--ink);margin-bottom:14px;">only<span style="color:var(--red);">_</span>noise</div>
-        <p style="font-family:'STIX Two Text',serif;font-style:italic;font-size:16.5px;line-height:1.6;color:var(--mute);margin:0;">The mind, described from the inside.</p>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:16.5px;line-height:1.6;color:var(--mute);margin:0;">The mind, described from the inside.</p>
       </div>
       <div style="display:flex;gap:clamp(30px,5vw,72px);flex-wrap:wrap;">
         <div>
           <div style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Index</div>
           <div style="display:flex;flex-direction:column;gap:9px;">
-            <a href="#thesis" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Thesis</a>
-            <a href="#method" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Method</a>
-            <a href="#journal" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Journal</a>
-            <a href="#readings" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Reading</a>
+            <a href="#thesis" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Thesis</a>
+            <a href="#method" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Method</a>
+            <a href="#journal" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Journal</a>
+            <a href="#readings" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Reading</a>
           </div>
         </div>
         <div>
           <div style="font-family:'Martian Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;">Elsewhere</div>
           <div style="display:flex;flex-direction:column;gap:9px;">
-            <a href="https://a-h.institute" target="_blank" rel="noopener" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">a—h.institute</a>
-            <a href="https://psychonaut.guide" target="_blank" rel="noopener" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">psychonaut.guide</a>
-            <a href="mailto:correspondence@only-noise.org" style="font-family:'STIX Two Text',serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Correspond</a>
+            <a href="https://a-h.institute" target="_blank" rel="noopener" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">a—h.institute</a>
+            <a href="https://psychonaut.guide" target="_blank" rel="noopener" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">psychonaut.guide</a>
+            <a href="mailto:correspondence@only-noise.org" style="font-family:'Geist','STIX Two Text',sans-serif;font-size:16px;color:var(--ink-2);" style-hover="color:var(--gold);">Correspond</a>
           </div>
         </div>
       </div>
     </div>
     <div style="max-width:1120px;margin:0 auto;padding:20px clamp(22px,5vw,64px) 40px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;border-top:1px solid rgba(var(--line),0.06);">
       <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);">Part of the a—h.institute &nbsp;·&nbsp; © {{ year }}</div>
-      <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);">Set in STIX Two Text &amp; Martian Mono</div>
+      <div style="font-family:'Martian Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--dim);">Set in Geist · STIX Two Text · Martian Mono</div>
     </div>
   </footer>
 
@@ -464,10 +478,10 @@ a:hover{color:var(--red);}
       </div>
       <article style="position:relative;z-index:1;max-width:720px;margin:0 auto;padding:clamp(40px,8vh,100px) clamp(22px,5vw,40px) clamp(80px,12vh,140px);">
         <div style="font-family:'Martian Mono',monospace;font-size:11.5px;letter-spacing:0.14em;color:var(--mute);margin-bottom:24px;">{{ post.date }} &nbsp;·&nbsp; {{ post.read }}</div>
-        <h1 style="font-family:'STIX Two Text',serif;font-weight:400;font-size:clamp(32px,4.8vw,52px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">{{ post.title }}</h1>
-        <p style="font-family:'STIX Two Text',serif;font-style:italic;font-size:clamp(19px,1.9vw,23px);line-height:1.55;color:var(--mute);margin:0 0 40px;border-bottom:1px solid rgba(var(--line),0.12);padding-bottom:34px;">{{ post.excerpt }}</p>
+        <h1 style="font-family:'Geist','STIX Two Text',sans-serif;font-weight:400;font-size:clamp(32px,4.8vw,52px);line-height:1.06;letter-spacing:-0.005em;color:var(--ink);margin:0 0 20px;">{{ post.title }}</h1>
+        <p style="font-family:'Geist','STIX Two Text',sans-serif;font-style:italic;font-size:clamp(19px,1.9vw,23px);line-height:1.55;color:var(--mute);margin:0 0 40px;border-bottom:1px solid rgba(var(--line),0.12);padding-bottom:34px;">{{ post.excerpt }}</p>
         <sc-for list="{{ post.body }}" as="para" hint-placeholder-count="4">
-          <p style="font-family:'STIX Two Text',serif;font-size:clamp(18px,1.5vw,21px);line-height:1.78;color:var(--ink-2);margin:0 0 28px;">{{ para }}</p>
+          <p style="font-family:'Geist','STIX Two Text',sans-serif;font-size:clamp(18px,1.5vw,21px);line-height:1.78;color:var(--ink-2);margin:0 0 28px;">{{ para }}</p>
         </sc-for>
         <div style="margin-top:44px;padding-top:30px;border-top:1px solid rgba(var(--line),0.12);font-family:'Martian Mono',monospace;font-size:12px;color:var(--dim);">only<span style="color:var(--red);">_</span>noise &nbsp;·&nbsp; field journal</div>
       </article>
